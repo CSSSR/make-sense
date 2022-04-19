@@ -1,16 +1,16 @@
-import {ISize} from "../../../../interfaces/ISize";
-import {ImageData, LabelName} from "../../../../store/labels/types";
-import React from "react";
-import Scrollbars from "react-custom-scrollbars";
-import {updateImageDataById} from "../../../../store/labels/actionCreators";
-import {AppState} from "../../../../store";
-import {connect} from "react-redux";
-import {remove} from "lodash";
+import {ISize} from '../../../../interfaces/ISize';
+import {ImageData, LabelName} from '../../../../store/labels/types';
+import React from 'react';
+import Scrollbars from 'react-custom-scrollbars';
+import {updateImageDataById} from '../../../../store/labels/actionCreators';
+import {AppState} from '../../../../store';
+import {connect} from 'react-redux';
+import {remove} from 'lodash';
 import './TagLabelsList.scss';
-import classNames from "classnames";
-import {ImageButton} from "../../../Common/ImageButton/ImageButton";
-import {PopupWindowType} from "../../../../data/enums/PopupWindowType";
-import {updateActivePopupType} from "../../../../store/general/actionCreators";
+import classNames from 'classnames';
+import {ImageButton} from '../../../Common/ImageButton/ImageButton';
+import {PopupWindowType} from '../../../../data/enums/PopupWindowType';
+import {updateActivePopupType} from '../../../../store/general/actionCreators';
 interface IProps {
     size: ISize;
     imageData: ImageData;
@@ -53,9 +53,9 @@ const TagLabelsList: React.FC<IProps> = (
 
     const getClassName = (labelId: string) => {
         return classNames(
-            "TagItem",
+            'TagItem',
             {
-                "active": imageData.labelNameIds.includes(labelId)
+                'active': imageData.labelNameIds.includes(labelId)
             }
         );
     };
@@ -76,8 +76,8 @@ const TagLabelsList: React.FC<IProps> = (
                 </div>
             }),
             <ImageButton
-                image={"ico/plus.png"}
-                imageAlt={"plus"}
+                image={'ico/plus.png'}
+                imageAlt={'plus'}
                 buttonSize={{width: 32, height: 32}}
                 onClick={addNewOnClick}
             />
@@ -86,28 +86,28 @@ const TagLabelsList: React.FC<IProps> = (
 
     return (
         <div
-            className="TagLabelsList"
+            className='TagLabelsList'
             style={listStyle}
-            key="tag-labels-list"
+            key='tag-labels-list'
         >
             {labelNames.length === 0 ?
                 <div
-                    className="EmptyLabelList"
+                    className='EmptyLabelList'
                     onClick={addNewOnClick}
-                    key="empty-label-list"
+                    key='empty-label-list'
                 >
                     <img
                         draggable={false}
-                        alt={"upload"}
-                        src={"ico/type-writer.png"}
+                        alt={'upload'}
+                        src={'ico/type-writer.png'}
                     />
-                    <p className="extraBold">Your label list is empty</p>
+                    <p className='extraBold'>Your label list is empty</p>
                 </div> :
                 <Scrollbars>
                     <div
-                        className="TagLabelsListContent"
+                        className='TagLabelsListContent'
                         style={listStyleContent}
-                        key="tag-labels-list-content"
+                        key='tag-labels-list-content'
                     >
                         {getChildren()}
                     </div>

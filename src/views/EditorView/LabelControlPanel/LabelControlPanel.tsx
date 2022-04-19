@@ -1,18 +1,18 @@
 import React, {useState} from 'react';
 import './LabelControlPanel.scss';
-import {updatePreventCustomCursorStatus} from "../../../store/general/actionCreators";
-import {AppState} from "../../../store";
-import {connect} from "react-redux";
-import {IPoint} from "../../../interfaces/IPoint";
-import classNames from "classnames";
-import {LabelName, LabelPoint, LabelRect} from "../../../store/labels/types";
-import {ImageButton} from "../../Common/ImageButton/ImageButton";
-import {LabelActions} from "../../../logic/actions/LabelActions";
-import {ImageData} from "../../../store/labels/types";
-import {LabelStatus} from "../../../data/enums/LabelStatus";
-import {updateImageDataById} from "../../../store/labels/actionCreators";
-import {findLast} from "lodash";
-import {LabelsSelector} from "../../../store/selectors/LabelsSelector";
+import {updatePreventCustomCursorStatus} from '../../../store/general/actionCreators';
+import {AppState} from '../../../store';
+import {connect} from 'react-redux';
+import {IPoint} from '../../../interfaces/IPoint';
+import classNames from 'classnames';
+import {LabelName, LabelPoint, LabelRect} from '../../../store/labels/types';
+import {ImageButton} from '../../Common/ImageButton/ImageButton';
+import {LabelActions} from '../../../logic/actions/LabelActions';
+import {ImageData} from '../../../store/labels/types';
+import {LabelStatus} from '../../../data/enums/LabelStatus';
+import {updateImageDataById} from '../../../store/labels/actionCreators';
+import {findLast} from 'lodash';
+import {LabelsSelector} from '../../../store/selectors/LabelsSelector';
 
 interface IProps {
     position: IPoint;
@@ -76,8 +76,8 @@ const LabelControlPanel: React.FC<IProps> = ({position, updatePreventCustomCurso
 
     const getClassName = () => {
         return classNames(
-            "LabelControlPanel", {
-                "is-active": isPanelActive()
+            'LabelControlPanel', {
+                'is-active': isPanelActive()
             }
         );
     };
@@ -94,21 +94,21 @@ const LabelControlPanel: React.FC<IProps> = ({position, updatePreventCustomCurso
     >
         {isPanelActive() && <>
             <ImageButton
-                image={"ico/plus.png"}
-                imageAlt={"plus"}
+                image={'ico/plus.png'}
+                imageAlt={'plus'}
                 buttonSize={{width: 30, height: 30}}
                 padding={15}
                 onClick={onAccept}
             />
             <ImageButton
-                image={"ico/trash.png"}
-                imageAlt={"trash"}
+                image={'ico/trash.png'}
+                imageAlt={'trash'}
                 buttonSize={{width: 30, height: 30}}
                 padding={15}
                 onClick={onReject}
             />
             {labelData.suggestedLabel && LabelActions.labelExistsInLabelNames(labelData.suggestedLabel) ?
-                <div className="SuggestedLabel">
+                <div className='SuggestedLabel'>
                     {labelData.suggestedLabel}
                 </div> :
                 null

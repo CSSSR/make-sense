@@ -1,9 +1,9 @@
-import {AnnotationFormatType} from "../../data/enums/AnnotationFormatType";
-import {LabelsSelector} from "../../store/selectors/LabelsSelector";
-import {ImageData, LabelLine, LabelName} from "../../store/labels/types";
-import {ExporterUtil} from "../../utils/ExporterUtil";
-import {ImageRepository} from "../imageRepository/ImageRepository";
-import {findLast} from "lodash";
+import {AnnotationFormatType} from '../../data/enums/AnnotationFormatType';
+import {LabelsSelector} from '../../store/selectors/LabelsSelector';
+import {ImageData, LabelLine, LabelName} from '../../store/labels/types';
+import {ExporterUtil} from '../../utils/ExporterUtil';
+import {ImageRepository} from '../imageRepository/ImageRepository';
+import {findLast} from 'lodash';
 
 export class LineLabelsExporter {
     public static export(exportFormatType: AnnotationFormatType): void {
@@ -22,7 +22,7 @@ export class LineLabelsExporter {
                 return LineLabelsExporter.wrapLineLabelsIntoCSV(imageData)})
             .filter((imageLabelData: string) => {
                 return !!imageLabelData})
-            .join("\n");
+            .join('\n');
         const fileName: string = `${ExporterUtil.getExportFileName()}.csv`;
         ExporterUtil.saveAs(content, fileName);
     }
@@ -45,8 +45,8 @@ export class LineLabelsExporter {
                 image.width.toString(),
                 image.height.toString()
             ] : [];
-            return labelFields.join(",")
+            return labelFields.join(',')
         });
-        return labelLinesString.join("\n");
+        return labelLinesString.join('\n');
     }
 }

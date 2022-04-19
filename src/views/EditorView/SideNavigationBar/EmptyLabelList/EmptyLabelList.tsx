@@ -1,7 +1,7 @@
 import React from 'react';
 import './EmptyLabelList.scss';
-import {AppState} from "../../../../store";
-import {connect} from "react-redux";
+import {AppState} from '../../../../store';
+import {connect} from 'react-redux';
 
 interface IProps {
     firstLabelCreatedFlag: boolean;
@@ -13,22 +13,22 @@ const EmptyLabelList: React.FC<IProps> = ({firstLabelCreatedFlag, labelBefore, l
     const before = <>
         <img
             draggable={false}
-            alt={"lets_start"}
-            src={"ico/rocket.png"}
+            alt={'lets_start'}
+            src={'ico/rocket.png'}
         />
-        <p className="extraBold">{labelBefore}</p>
+        <p className='extraBold'>{labelBefore}</p>
     </>;
 
     const after = <>
         <img
             draggable={false}
-            alt={"no_labels"}
-            src={"ico/box-opened.png"}
+            alt={'no_labels'}
+            src={'ico/box-opened.png'}
         />
-        <p className="extraBold">{labelAfter}</p>
+        <p className='extraBold'>{labelAfter}</p>
     </>;
 
-    return(<div className="EmptyLabelList">
+    return(<div className='EmptyLabelList'>
         {!firstLabelCreatedFlag ? before : after}
     </div>)
 };
