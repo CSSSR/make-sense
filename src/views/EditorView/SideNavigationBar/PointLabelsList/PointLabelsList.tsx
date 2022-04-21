@@ -89,6 +89,7 @@ const PointLabelsList: React.FC<IProps> = (
                 key={labelPoint.id}
                 onDelete={deletePointLabelById}
                 value={labelPoint.labelId !== null ? findLast(labelNames, {id: labelPoint.labelId}) : null}
+                labelValue={labelPoint.labelValue}
                 options={labelNames}
                 onSelectLabel={updatePointLabel}
             />

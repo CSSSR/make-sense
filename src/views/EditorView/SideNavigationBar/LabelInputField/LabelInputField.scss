@@ -52,7 +52,7 @@
         font-size: 14px;
         cursor: pointer;
         user-select: none;
-        min-width: 160px;
+        min-width: 120px;
         height: 30px;
         padding: 0 5px;
         color: white;
@@ -167,5 +167,21 @@
       background-color: $secondaryColor; // fallback if new css variables are not supported by browser
       background-color: var(--leading-color);
     }
+  }
+}
+.LabelValueInput{
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid $darkThemeThirdColor;
+  height: 30px;
+  padding: 0;
+
+  &:hover, &:focus {
+    border-bottom: 1px solid $secondaryColor;
+  }
+
+  &::placeholder {
+    color: rgba(255,255,255,.75);
+    font-size: 14px;
   }
 }

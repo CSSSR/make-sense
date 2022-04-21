@@ -81,6 +81,7 @@ const RectLabelsList: React.FC<IProps> = ({size, imageData, updateImageDataById,
                 key={labelRect.id}
                 onDelete={deleteRectLabelById}
                 value={labelRect.labelId !== null ? findLast(labelNames, {id: labelRect.labelId}) : null}
+                labelValue={labelRect.labelValue}
                 options={labelNames}
                 onSelectLabel={updateRectLabel}
             />

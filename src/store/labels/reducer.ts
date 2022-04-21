@@ -1,4 +1,4 @@
-import {LabelsActionTypes, LabelsState, ImageData} from './types';
+import {ImageData, LabelPoint, LabelsActionTypes, LabelsState} from './types';
 import {Action} from '../Actions';
 
 const initialState: LabelsState = {
@@ -21,6 +21,55 @@ export function labelsReducer(
             return {
                 ...state,
                 activeImageIndex: action.payload.activeImageIndex
+            }
+        }
+        case Action.UPDATE_ACTIVE_LABEL_ATTRIBUTE_VALUE: {
+            return {
+                ...state,
+                imagesData: state.imagesData.map((img, index) => {
+                     if(index === state.activeImageIndex){
+                         return {
+                             ...img,
+                             labelPoints: img.labelPoints.map(label => {
+                                 if(label.id === state.highlightedLabelId){
+                                     return {
+                                         ...label,
+                                         labelValue: action.payload.value
+                                     }
+                                 }
+                                 return label
+                             }),
+                             labelLines: img.labelLines.map(label => {
+                                 if(label.id === state.highlightedLabelId){
+                                     return {
+                                         ...label,
+                                         labelValue: action.payload.value
+                                     }
+                                 }
+                                 return label
+                             }),
+                             labelRects: img.labelRects.map(label => {
+                                 if(label.id === state.highlightedLabelId){
+                                     return {
+                                         ...label,
+                                         labelValue: action.payload.value
+                                     }
+                                 }
+                                 return label
+                             }),
+                             labelPolygons: img.labelPolygons.map(label => {
+                                 if(label.id === state.highlightedLabelId){
+                                     return {
+                                         ...label,
+                                         labelValue: action.payload.value
+                                     }
+                                 }
+                                 return label
+                             }),
+                         }
+                     }
+                     return img;
+                })
             }
         }
         case Action.UPDATE_ACTIVE_LABEL_NAME_ID: {

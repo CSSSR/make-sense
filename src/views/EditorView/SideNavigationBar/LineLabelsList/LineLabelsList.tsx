@@ -87,6 +87,7 @@ const LineLabelsList: React.FC<IProps> = (
                     key={labelLine.id}
                     onDelete={deleteLineLabelById}
                     value={labelLine.labelId !== null ? findLast(labelNames, {id: labelLine.labelId}) : null}
+                    labelValue={labelLine.labelValue}
                     options={labelNames}
                     onSelectLabel={updateLineLabel}
                 />

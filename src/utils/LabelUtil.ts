@@ -20,6 +20,7 @@ export class LabelUtil {
         return {
             id: uuidv4(),
             labelId,
+            labelValue: null,
             rect,
             isCreatedByAI: false,
             status: LabelStatus.ACCEPTED,
@@ -31,6 +32,7 @@ export class LabelUtil {
         return {
             id: uuidv4(),
             labelId,
+            labelValue: null,
             vertices
         }
     }

@@ -29,6 +29,15 @@ export function updateActiveLabelId(activeLabelId: string): LabelsActionTypes {
     };
 }
 
+export function updateActiveLabelAttributeValue(value: string): LabelsActionTypes {
+    return {
+        type: Action.UPDATE_ACTIVE_LABEL_ATTRIBUTE_VALUE,
+        payload:{
+            value
+        }
+    }
+}
+
 export function updateHighlightedLabelId(highlightedLabelId: string): LabelsActionTypes {
     return {
         type: Action.UPDATE_HIGHLIGHTED_LABEL_ID,
