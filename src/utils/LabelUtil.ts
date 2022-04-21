@@ -28,11 +28,11 @@ export class LabelUtil {
         }
     }
 
-    public static createLabelPolygon(labelId: string, vertices: IPoint[]): LabelPolygon {
+    public static createLabelPolygon(labelId: string, vertices: IPoint[], value: string | null =null): LabelPolygon {
         return {
             id: uuidv4(),
             labelId,
-            labelValue: null,
+            labelValue: value,
             vertices
         }
     }

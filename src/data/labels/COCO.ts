@@ -37,7 +37,7 @@ export type COCOObject = {
 export type ValuedCOCOAnnotation = {
     id: number;
     category_id: number;
-    value: string | null;
+    value?: string | null;
     iscrowd: number;
     segmentation: COCOSegmentation;
     image_id: number;

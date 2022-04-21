@@ -1,6 +1,6 @@
 import {ImageData, LabelName} from '../../../store/labels/types';
 import {LabelsSelector} from '../../../store/selectors/LabelsSelector';
-import {COCOCategory, COCOImage, COCOObject} from '../../../data/labels/COCO';
+import {COCOCategory, COCOImage, COCOObject, ValuedCOCOAnnotation, ValuedCOCOObject} from '../../../data/labels/COCO';
 import { v4 as uuidv4 } from 'uuid';
 import {ArrayUtil, PartitionResult} from '../../../utils/ArrayUtil';
 import {ImageDataUtil} from '../../../utils/ImageDataUtil';
@@ -47,7 +47,7 @@ export class COCOImporter extends AnnotationImporter {
         reader.onerror = () => onFailure(new COCOAnnotationReadingError());
     }
 
-    public static deserialize(text: string): COCOObject {
+    public static deserialize(text: string): ValuedCOCOObject | COCOObject {
         try {
             return JSON.parse(text) as COCOObject
         } catch (error) {
@@ -55,7 +55,7 @@ export class COCOImporter extends AnnotationImporter {
         }
     }
 
-    public applyLabels(imageData: ImageData[], annotationsObject: COCOObject): ImportResult {
+    public applyLabels(imageData: ImageData[], annotationsObject: COCOObject | ValuedCOCOObject): ImportResult {
         COCOImporter.validateCocoFormat(annotationsObject);
         const {images, categories, annotations} = annotationsObject;
         const labelNameMap: LabelNameMap = COCOImporter.mapCOCOCategories(categories);
@@ -78,7 +78,9 @@ export class COCOImporter extends AnnotationImporter {
                 const polygons = COCOUtils.segmentation2vertices(annotation.segmentation);
                 for (const polygon of polygons) {
                     imageDataMap[annotation.image_id].labelPolygons.push(LabelUtil.createLabelPolygon(
-                        labelNameMap[annotation.category_id].id, polygon
+                        labelNameMap[annotation.category_id].id,
+                        polygon,
+                        (annotation as ValuedCOCOAnnotation).value || null
                     ))
                 }
             }
@@ -120,7 +122,7 @@ export class COCOImporter extends AnnotationImporter {
         }, {});
     }
 
-    public static validateCocoFormat(annotationsObject: COCOObject): void {
+    public static validateCocoFormat(annotationsObject: COCOObject | ValuedCOCOObject): void {
         const missingKeys = COCOImporter.requiredKeys.filter((key: string) => !annotationsObject.hasOwnProperty(key))
         if (missingKeys.length !== 0) {
             throw new COCOFormatValidationError(`Uploaded file does not contain all required keys: ${missingKeys}`)
