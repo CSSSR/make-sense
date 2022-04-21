@@ -31,7 +31,7 @@ export function labelsReducer(
                          return {
                              ...img,
                              labelPoints: img.labelPoints.map(label => {
-                                 if(label.id === state.highlightedLabelId){
+                                 if(label.id === state.activeLabelId){
                                      return {
                                          ...label,
                                          labelValue: action.payload.value
@@ -40,7 +40,7 @@ export function labelsReducer(
                                  return label
                              }),
                              labelLines: img.labelLines.map(label => {
-                                 if(label.id === state.highlightedLabelId){
+                                 if(label.id === state.activeLabelId){
                                      return {
                                          ...label,
                                          labelValue: action.payload.value
@@ -49,7 +49,7 @@ export function labelsReducer(
                                  return label
                              }),
                              labelRects: img.labelRects.map(label => {
-                                 if(label.id === state.highlightedLabelId){
+                                 if(label.id === state.activeLabelId){
                                      return {
                                          ...label,
                                          labelValue: action.payload.value
@@ -58,7 +58,7 @@ export function labelsReducer(
                                  return label
                              }),
                              labelPolygons: img.labelPolygons.map(label => {
-                                 if(label.id === state.highlightedLabelId){
+                                 if(label.id === state.activeLabelId){
                                      return {
                                          ...label,
                                          labelValue: action.payload.value

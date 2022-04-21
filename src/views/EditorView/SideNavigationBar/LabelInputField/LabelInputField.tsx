@@ -202,7 +202,7 @@ class LabelInputField extends React.Component<IProps, IState> {
                                 className='LabelValueInput'
                                 onChange={this.onValueChange}
                                 placeholder='Value'
-                                value={this.props.labelValue}
+                                value={this.props.labelValue !== null ? this.props.labelValue : ''}
                             />
                         </div>
                         <div className='ContentWrapper LabelInputContentWrapper LabelInputRemoveButton'>
