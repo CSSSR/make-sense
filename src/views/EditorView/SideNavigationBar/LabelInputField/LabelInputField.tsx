@@ -199,6 +199,7 @@ class LabelInputField extends React.Component<IProps, IState> {
                             }
                             &nbsp;
                             <input
+                                tabIndex={-1}
                                 className='LabelValueInput'
                                 onChange={this.onValueChange}
                                 placeholder='Value'

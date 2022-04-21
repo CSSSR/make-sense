@@ -32,8 +32,8 @@ export function updateActiveLabelId(activeLabelId: string): LabelsActionTypes {
 export function updateActiveLabelAttributeValue(value: string): LabelsActionTypes {
     return {
         type: Action.UPDATE_ACTIVE_LABEL_ATTRIBUTE_VALUE,
-        payload:{
-            value
+        payload: {
+            value: value === '' ? null : value
         }
     }
 }

@@ -33,3 +33,21 @@ export type COCOObject = {
     annotations: COCOAnnotation[],
     categories: COCOCategory[]
 }
+
+export type ValuedCOCOAnnotation = {
+    id: number;
+    category_id: number;
+    value: string | null;
+    iscrowd: number;
+    segmentation: COCOSegmentation;
+    image_id: number;
+    area: number;
+    bbox: COCOBBox;
+}
+
+export type ValuedCOCOObject = {
+    info: COCOInfo,
+    images: COCOImage[],
+    annotations: ValuedCOCOAnnotation[],
+    categories: COCOCategory[]
+}

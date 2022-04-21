@@ -8,6 +8,7 @@ export type ImporterSpecDataMap = Record<AnnotationFormatType, typeof Annotation
 
 export const ImporterSpecData: ImporterSpecDataMap = {
     [AnnotationFormatType.COCO]: COCOImporter,
+    [AnnotationFormatType.ValuedCOCO]: undefined, // FIXME
     [AnnotationFormatType.CSV]: undefined,
     [AnnotationFormatType.JSON]: undefined,
     [AnnotationFormatType.VGG]: undefined,
