@@ -21,7 +21,7 @@ export class COCOExporter {
         const imagesData: ImageData[] = LabelsSelector.getImagesData();
         const labelNames: LabelName[] = LabelsSelector.getLabelNames();
         const projectName: string = GeneralSelector.getProjectName();
-        const COCOObject: COCOObject = COCOExporter.mapImagesDataToCOCOObject(imagesData, labelNames, projectName);
+        const COCOObject: COCOObject = this.mapImagesDataToCOCOObject(imagesData, labelNames, projectName);
         const content: string = JSON.stringify(COCOObject);
         const fileName: string = `${ExporterUtil.getExportFileName()}.json`;
         ExporterUtil.saveAs(content, fileName);
@@ -33,10 +33,10 @@ export class COCOExporter {
         projectName: string
     ): COCOObject {
         return {
-            'info': COCOExporter.getInfoComponent(projectName),
-            'images': COCOExporter.getImagesComponent(imagesData),
-            'annotations': COCOExporter.getAnnotationsComponent(imagesData, labelNames),
-            'categories':COCOExporter.getCategoriesComponent(labelNames)
+            'info': this.getInfoComponent(projectName),
+            'images': this.getImagesComponent(imagesData),
+            'annotations': this.getAnnotationsComponent(imagesData, labelNames),
+            'categories':this.getCategoriesComponent(labelNames)
         }
     }
 
@@ -71,7 +71,7 @@ export class COCOExporter {
     }
 
     public static getAnnotationsComponent(imagesData: ImageData[], labelNames: LabelName[]): COCOAnnotation[] {
-        const labelsMap: LabelDataMap = COCOExporter.mapLabelsData(labelNames);
+        const labelsMap: LabelDataMap = this.mapLabelsData(labelNames);
         let id = 0;
         const annotations: COCOAnnotation[][] = imagesData
             .filter((imagesData: ImageData) => imagesData.loadStatus)
@@ -83,9 +83,9 @@ export class COCOExporter {
                         'iscrowd': 0,
                         'image_id': index + 1,
                         'category_id': labelsMap[labelPolygon.labelId],
-                        'segmentation': COCOExporter.getCOCOSegmentation(labelPolygon.vertices),
-                        'bbox': COCOExporter.getCOCOBbox(labelPolygon.vertices),
-                        'area': COCOExporter.getCOCOArea(labelPolygon.vertices)
+                        'segmentation': this.getCOCOSegmentation(labelPolygon.vertices),
+                        'bbox': this.getCOCOBbox(labelPolygon.vertices),
+                        'area': this.getCOCOArea(labelPolygon.vertices)
                     }
                 })
             })
