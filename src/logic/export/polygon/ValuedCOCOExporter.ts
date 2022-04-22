@@ -21,7 +21,9 @@ export class ValuedCOCOExporter extends COCOExporter{
                         'iscrowd': 0,
                         'image_id': index + 1,
                         'category_id': labelsMap[labelPolygon.labelId],
-                        'value': labelPolygon.labelValue,
+                        'value': labelPolygon.labelValue!= null
+                            ? encodeURIComponent(labelPolygon.labelValue.trim())
+                            : null,
                         'segmentation': ValuedCOCOExporter.getCOCOSegmentation(labelPolygon.vertices),
                         'bbox': ValuedCOCOExporter.getCOCOBbox(labelPolygon.vertices),
                         'area': ValuedCOCOExporter.getCOCOArea(labelPolygon.vertices)
