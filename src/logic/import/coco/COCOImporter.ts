@@ -80,7 +80,9 @@ export class COCOImporter extends AnnotationImporter {
                     imageDataMap[annotation.image_id].labelPolygons.push(LabelUtil.createLabelPolygon(
                         labelNameMap[annotation.category_id].id,
                         polygon,
-                        (annotation as ValuedCOCOAnnotation).value || null
+                        (annotation as ValuedCOCOAnnotation).value
+                            ? decodeURIComponent((annotation as ValuedCOCOAnnotation).value)
+                            : null
                     ))
                 }
             }
