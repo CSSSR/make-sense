@@ -65,5 +65,4 @@ jobs:
           environment: production
           values: |
             cache: etag-only
-            auth: youtrack
             brotliCompression: enabled
