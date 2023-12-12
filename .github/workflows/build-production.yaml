@@ -1,32 +1,32 @@
-name: Production deploy
+name: Build static production
 on:
-  push:
-    branches:
-      - label-attributes
-concurrency: production_environment
+  workflow_dispatch:
+    inputs:
+      kuberta_system:
 
 jobs:
-  deploy:
+  build:
     name: Build production
     runs-on: ubuntu-latest
     permissions:
       contents: read
       id-token: write
-      deployments: write
 
     steps:
+      - uses: docker://quay.csssr.cloud/csssr/kuberta-init-workflow:v1
+
       - name: Download CSSSR actions
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: CSSSR/actions
           ssh-key: ${{ secrets.DOWNLOAD_ACTIONS_SSH_KEY }}
           path: actions
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           path: make-sense
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 16
 
@@ -40,7 +40,7 @@ jobs:
 
       - name: Import secrets
         id: secrets
-        uses: hashicorp/vault-action@v2.5.0
+        uses: hashicorp/vault-action@v2
         with:
           url: https://vault.csssr.com:8200
           jwtGithubAudience: ${{secrets.VAULT_JWT_AUDIENCE}}
@@ -52,17 +52,8 @@ jobs:
             aws/sts/s3-cdn-upload secret_key | AWS_SECRET_ACCESS_KEY ;
             aws/sts/s3-cdn-upload security_token | AWS_SESSION_TOKEN ;
 
-      - name: Deploy to production
-        uses: ./actions/deploy-static-site/v1beta1
+      - uses: ./actions/upload-static/v1beta1
         with:
-          auth: 'aws:${{steps.secrets.outputs.AWS_ACCESS_KEY_ID}}:${{steps.secrets.outputs.AWS_SECRET_ACCESS_KEY}}:${{steps.secrets.outputs.AWS_SESSION_TOKEN}}'
-          token: ${{ secrets.GITHUB_TOKEN }}
-          site-type: spa
           project-id: ensi-make-sense
           files: ./make-sense/build
-          no-previous-files: 'true'
-          host: make-sense.csssr.com
-          environment: production
-          values: |
-            cache: etag-only
-            brotliCompression: enabled
+          auth: "aws:${{steps.secrets.outputs.AWS_ACCESS_KEY_ID}}:${{steps.secrets.outputs.AWS_SECRET_ACCESS_KEY}}:${{steps.secrets.outputs.AWS_SESSION_TOKEN}}"
