@@ -40,7 +40,7 @@ jobs:
 
       - name: Import secrets
         id: secrets
-        uses: hashicorp/vault-action@v2
+        uses: hashicorp/vault-action@v3
         with:
           url: https://vault.csssr.com:8200
           jwtGithubAudience: ${{secrets.VAULT_JWT_AUDIENCE}}
