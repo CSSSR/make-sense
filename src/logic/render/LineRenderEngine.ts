@@ -204,6 +204,7 @@ export class LineRenderEngine extends BaseRenderEngine {
         const labelLine: LabelLine = {
             id: uuidv4(),
             labelId: activeLabelId,
+            labelValue: null,
             line: lineOnImage
         };
         imageData.labelLines.push(labelLine);

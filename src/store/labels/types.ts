@@ -9,6 +9,7 @@ export type LabelRect = {
     // GENERAL
     id: string;
     labelId: string;
+    labelValue: string | undefined,
     rect: IRect;
 
     // AI
@@ -21,6 +22,7 @@ export type LabelPoint = {
     // GENERAL
     id: string;
     labelId: string;
+    labelValue: string | null,
     point: IPoint;
 
     // AI
@@ -32,12 +34,14 @@ export type LabelPoint = {
 export type LabelPolygon = {
     id: string;
     labelId: string;
+    labelValue: string | null,
     vertices: IPoint[];
 }
 
 export type LabelLine = {
     id: string;
     labelId: string;
+    labelValue: string | null,
     line: ILine
 }
 
@@ -93,6 +97,13 @@ interface UpdateActiveLabelId {
     type: typeof Action.UPDATE_ACTIVE_LABEL_ID;
     payload: {
         activeLabelId: string;
+    }
+}
+
+interface UpdateActiveLabelAttributeValue {
+    type: typeof Action.UPDATE_ACTIVE_LABEL_ATTRIBUTE_VALUE;
+    payload: {
+        value: string
     }
 }
 
@@ -156,4 +167,5 @@ export type LabelsActionTypes = UpdateActiveImageIndex
     | UpdateActiveLabelId
     | UpdateHighlightedLabelId
     | UpdateFirstLabelCreatedFlag
+    | UpdateActiveLabelAttributeValue
 

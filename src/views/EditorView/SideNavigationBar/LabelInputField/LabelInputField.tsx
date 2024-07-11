@@ -1,20 +1,24 @@
-import React from 'react';
-import {ISize} from "../../../../interfaces/ISize";
+import React, {ChangeEventHandler} from 'react';
+import {ISize} from '../../../../interfaces/ISize';
 import './LabelInputField.scss';
-import classNames from "classnames";
-import {ImageButton} from "../../../Common/ImageButton/ImageButton";
-import {IRect} from "../../../../interfaces/IRect";
-import {IPoint} from "../../../../interfaces/IPoint";
-import {RectUtil} from "../../../../utils/RectUtil";
-import {AppState} from "../../../../store";
-import {connect} from "react-redux";
-import {updateActiveLabelId, updateHighlightedLabelId} from "../../../../store/labels/actionCreators";
+import classNames from 'classnames';
+import {ImageButton} from '../../../Common/ImageButton/ImageButton';
+import {IRect} from '../../../../interfaces/IRect';
+import {IPoint} from '../../../../interfaces/IPoint';
+import {RectUtil} from '../../../../utils/RectUtil';
+import {AppState} from '../../../../store';
+import {connect} from 'react-redux';
+import {
+    updateActiveLabelAttributeValue,
+    updateActiveLabelId,
+    updateHighlightedLabelId
+} from '../../../../store/labels/actionCreators';
 import Scrollbars from 'react-custom-scrollbars';
-import {EventType} from "../../../../data/enums/EventType";
-import {LabelName} from "../../../../store/labels/types";
-import {LabelsSelector} from "../../../../store/selectors/LabelsSelector";
-import {PopupWindowType} from "../../../../data/enums/PopupWindowType";
-import {updateActivePopupType} from "../../../../store/general/actionCreators";
+import {EventType} from '../../../../data/enums/EventType';
+import {LabelName} from '../../../../store/labels/types';
+import {LabelsSelector} from '../../../../store/selectors/LabelsSelector';
+import {PopupWindowType} from '../../../../data/enums/PopupWindowType';
+import {updateActivePopupType} from '../../../../store/general/actionCreators';
 
 interface IProps {
     size: ISize;
@@ -22,12 +26,14 @@ interface IProps {
     isHighlighted: boolean;
     id: string;
     value: LabelName;
+    labelValue: string | null,
     options: LabelName[];
     onDelete: (id: string) => any;
     onSelectLabel: (labelRectId: string, labelNameId: string) => any;
     updateHighlightedLabelId: (highlightedLabelId: string) => any;
     updateActiveLabelId: (highlightedLabelId: string) => any;
     updateActivePopupType: (activePopupType: PopupWindowType) => any;
+    updateActiveLabelAttributeValue: (value: string) => any;
 }
 
 interface IState {
@@ -52,17 +58,17 @@ class LabelInputField extends React.Component<IProps, IState> {
 
     public componentDidMount(): void {
         requestAnimationFrame(() => {
-            this.setState({ animate: true });
+            this.setState({animate: true});
         });
     }
 
     private getClassName() {
         return classNames(
-            "LabelInputField",
+            'LabelInputField',
             {
-                "loaded": this.state.animate,
-                "active": this.props.isActive,
-                "highlighted": this.props.isHighlighted
+                'loaded': this.state.animate,
+                'active': this.props.isActive,
+                'highlighted': this.props.isHighlighted
             }
         );
     }
@@ -92,23 +98,23 @@ class LabelInputField extends React.Component<IProps, IState> {
         }
     };
 
-    private getDropdownStyle = ():React.CSSProperties => {
+    private getDropdownStyle = (): React.CSSProperties => {
         const clientRect = this.dropdownLabel.getBoundingClientRect();
         const height: number = Math.min(this.props.options.length, this.dropdownOptionCount) * this.dropdownOptionHeight;
         const style = {
             width: clientRect.width,
-            height: height,
+            height,
             left: clientRect.left
         };
 
-        if (window.innerHeight * 2/3 < clientRect.top)
+        if (window.innerHeight * 2 / 3 < clientRect.top)
             return Object.assign(style, {top: clientRect.top - this.dropdownMargin - height});
         else
             return Object.assign(style, {top: clientRect.bottom + this.dropdownMargin});
     };
 
     private getDropdownOptions = () => {
-        const onClick = (id: string, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        const onClick = (id: string, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
             this.setState({isOpen: false});
             window.removeEventListener(EventType.MOUSE_DOWN, this.closeDropdown);
             this.props.onSelectLabel(this.props.id, id);
@@ -119,7 +125,7 @@ class LabelInputField extends React.Component<IProps, IState> {
 
         return this.props.options.map((option: LabelName) => {
             return <div
-                className="DropdownOption"
+                className='DropdownOption'
                 key={option.id}
                 style={{height: this.dropdownOptionHeight}}
                 onClick={(event) => onClick(option.id, event)}
@@ -133,7 +139,7 @@ class LabelInputField extends React.Component<IProps, IState> {
         this.props.updateHighlightedLabelId(this.props.id);
     };
 
-    private mouseLeaveHandler =() => {
+    private mouseLeaveHandler = () => {
         this.props.updateHighlightedLabelId(null);
     };
 
@@ -141,9 +147,13 @@ class LabelInputField extends React.Component<IProps, IState> {
         this.props.updateActiveLabelId(this.props.id);
     };
 
+    private onValueChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+        this.props.updateActiveLabelAttributeValue(event.target.value)
+    }
+
     public render() {
         const {size, id, value, onDelete} = this.props;
-        return(
+        return (
             <div
                 className={this.getClassName()}
                 style={{
@@ -156,41 +166,51 @@ class LabelInputField extends React.Component<IProps, IState> {
                 onClick={this.onClickHandler}
             >
                 <div
-                    className="LabelInputFieldWrapper"
+                    className='LabelInputFieldWrapper'
                     style={{
                         width: size.width,
                         height: size.height,
                     }}
                 >
-                    <div className="Marker"/>
-                    <div className="Content">
-                        <div className="ContentWrapper">
-                            <div className="DropdownLabel"
+                    <div className='Marker'/>
+                    <div className='Content LabelInputContent'>
+                        <div className='ContentWrapper LabelInputContentWrapper LabelInputLabelSelect'>
+                            <div className='DropdownLabel'
                                  ref={ref => this.dropdownLabel = ref}
                                  onClick={this.openDropdown}
                             >
-                                {value ? value.name : "Select label"}
+                                {value ? value.name : 'Select label'}
                             </div>
-                            {this.state.isOpen && <div
-                                className="Dropdown"
-                                style={this.getDropdownStyle()}
-                                ref={ref => this.dropdown = ref}
-                            >
-                                <Scrollbars
-                                    renderTrackHorizontal={props => <div {...props} className="track-horizontal"/>}
+                            {
+                                this.state.isOpen && <div
+                                    className='Dropdown'
+                                    style={this.getDropdownStyle()}
+                                    ref={ref => this.dropdown = ref}
                                 >
-                                    <div>
-                                        {this.getDropdownOptions()}
-                                    </div>
-                                </Scrollbars>
+                                    <Scrollbars
+                                        renderTrackHorizontal={props => <div {...props} className='track-horizontal'/>}
+                                    >
+                                        <div>
+                                            {this.getDropdownOptions()}
+                                        </div>
+                                    </Scrollbars>
 
-                            </div>}
+                                </div>
+                            }
+                            &nbsp;
+                            <input
+                                tabIndex={-1}
+                                className='LabelValueInput'
+                                onChange={this.onValueChange}
+                                placeholder='Value'
+                                value={this.props.labelValue !== null ? this.props.labelValue : ''}
+                            />
                         </div>
-                        <div className="ContentWrapper">
+                        <div className='ContentWrapper LabelInputContentWrapper LabelInputRemoveButton'>
                             <ImageButton
-                                externalClassName={"trash"}
-                                image={"ico/trash.png"}
-                                imageAlt={"remove_rect"}
+                                externalClassName={'trash'}
+                                image={'ico/trash.png'}
+                                imageAlt={'remove_rect'}
                                 buttonSize={{width: 30, height: 30}}
                                 onClick={() => onDelete(id)}
                             />
@@ -205,7 +225,8 @@ class LabelInputField extends React.Component<IProps, IState> {
 const mapDispatchToProps = {
     updateHighlightedLabelId,
     updateActiveLabelId,
-    updateActivePopupType
+    updateActivePopupType,
+    updateActiveLabelAttributeValue,
 };
 
 const mapStateToProps = (state: AppState) => ({});

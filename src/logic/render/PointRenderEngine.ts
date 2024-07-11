@@ -189,6 +189,7 @@ export class PointRenderEngine extends BaseRenderEngine {
         const labelPoint: LabelPoint = {
             id: uuidv4(),
             labelId: activeLabelId,
+            labelValue: null,
             point,
             isCreatedByAI: false,
             status: LabelStatus.ACCEPTED,

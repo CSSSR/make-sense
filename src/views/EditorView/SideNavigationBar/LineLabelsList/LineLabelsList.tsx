@@ -1,19 +1,19 @@
 import React from 'react';
 import './LineLabelsList.scss';
-import {ISize} from "../../../../interfaces/ISize";
-import {ImageData, LabelLine, LabelName} from "../../../../store/labels/types";
-import {LabelActions} from "../../../../logic/actions/LabelActions";
-import LabelInputField from "../LabelInputField/LabelInputField";
-import {findLast} from "lodash";
-import EmptyLabelList from "../EmptyLabelList/EmptyLabelList";
-import Scrollbars from "react-custom-scrollbars";
+import {ISize} from '../../../../interfaces/ISize';
+import {ImageData, LabelLine, LabelName} from '../../../../store/labels/types';
+import {LabelActions} from '../../../../logic/actions/LabelActions';
+import LabelInputField from '../LabelInputField/LabelInputField';
+import {findLast} from 'lodash';
+import EmptyLabelList from '../EmptyLabelList/EmptyLabelList';
+import Scrollbars from 'react-custom-scrollbars';
 import {
     updateActiveLabelId,
     updateActiveLabelNameId,
     updateImageDataById
-} from "../../../../store/labels/actionCreators";
-import {AppState} from "../../../../store";
-import {connect} from "react-redux";
+} from '../../../../store/labels/actionCreators';
+import {AppState} from '../../../../store';
+import {connect} from 'react-redux';
 
 interface IProps {
     size: ISize;
@@ -87,6 +87,7 @@ const LineLabelsList: React.FC<IProps> = (
                     key={labelLine.id}
                     onDelete={deleteLineLabelById}
                     value={labelLine.labelId !== null ? findLast(labelNames, {id: labelLine.labelId}) : null}
+                    labelValue={labelLine.labelValue}
                     options={labelNames}
                     onSelectLabel={updateLineLabel}
                 />
@@ -95,18 +96,18 @@ const LineLabelsList: React.FC<IProps> = (
 
     return (
         <div
-            className="LineLabelsList"
+            className='LineLabelsList'
             style={listStyle}
             onClickCapture={onClickHandler}
         >
             {imageData.labelLines.length === 0 ?
                 <EmptyLabelList
-                    labelBefore={"draw your first line"}
-                    labelAfter={"no labels created for this image yet"}
+                    labelBefore={'draw your first line'}
+                    labelAfter={'no labels created for this image yet'}
                 /> :
                 <Scrollbars>
                     <div
-                        className="LineLabelsListContent"
+                        className='LineLabelsListContent'
                         style={listStyleContent}
                     >
                         {getChildren()}

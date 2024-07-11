@@ -56,6 +56,7 @@ export class AIObjectDetectionActions {
                 id: uuidv4(),
                 labelIndex: null,
                 labelId: null,
+                labelValue: null,
                 rect: {
                     x: prediction.bbox[0],
                     y: prediction.bbox[1],

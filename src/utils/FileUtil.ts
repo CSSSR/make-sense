@@ -21,7 +21,7 @@ export class FileUtil {
 
     public static readFile(fileData: File): Promise<string> {
         return new Promise((resolve, reject) => {
-            let reader = new FileReader();
+            const reader = new FileReader();
             reader.onloadend = (event: any) => {
                 resolve(event.target.result);
             };
@@ -41,16 +41,16 @@ export class FileUtil {
     }
 
     public static extractFileExtension(name: string): string | null {
-        const parts = name.split(".");
+        const parts = name.split('.');
         return parts.length > 1 ? parts[parts.length - 1] : null;
     }
 
     public static extractFileName(name: string): string | null {
-        const splitPath = name.split(".");
-        let fName = "";
+        const splitPath = name.split('.');
+        let fName = '';
         for(const idx of Array(splitPath.length - 1).keys()){
-            if(fName === "") fName += splitPath[idx];
-            else fName += "." + splitPath[idx];
+            if(fName === '') fName += splitPath[idx];
+            else fName += '.' + splitPath[idx];
         }
         return fName;
     }

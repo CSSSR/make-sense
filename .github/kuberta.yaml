@@ -1,0 +1,20 @@
+version: 1-alpha.1
+
+releases:
+  ensi-make-sense-production:
+    name: ensi-make-sense-production
+    cluster: gke-csssr-production
+    autodeploy-on:
+      push:
+        - label-attributes
+    chart: oci://quay.csssr.cloud/charts/static-site@~1.1.0
+    static-params:
+      projectID: ensi-make-sense
+      host: make-sense.csssr.com
+      environment: production
+      cache: etag-only
+      brotliCompression: enabled
+    builds:
+      - workflow: build-production.yaml
+        values:
+          buildID: build-{{ .Build.RunID }}

@@ -1,20 +1,20 @@
 import React from 'react';
-import {ISize} from "../../../../interfaces/ISize";
+import {ISize} from '../../../../interfaces/ISize';
 import Scrollbars from 'react-custom-scrollbars';
-import {ImageData, LabelName, LabelPoint} from "../../../../store/labels/types";
+import {ImageData, LabelName, LabelPoint} from '../../../../store/labels/types';
 import './PointLabelsList.scss';
 import {
     updateActiveLabelId,
     updateActiveLabelNameId,
     updateImageDataById
-} from "../../../../store/labels/actionCreators";
-import {AppState} from "../../../../store";
-import {connect} from "react-redux";
-import LabelInputField from "../LabelInputField/LabelInputField";
-import EmptyLabelList from "../EmptyLabelList/EmptyLabelList";
-import {LabelActions} from "../../../../logic/actions/LabelActions";
-import {findLast} from "lodash";
-import {LabelStatus} from "../../../../data/enums/LabelStatus";
+} from '../../../../store/labels/actionCreators';
+import {AppState} from '../../../../store';
+import {connect} from 'react-redux';
+import LabelInputField from '../LabelInputField/LabelInputField';
+import EmptyLabelList from '../EmptyLabelList/EmptyLabelList';
+import {LabelActions} from '../../../../logic/actions/LabelActions';
+import {findLast} from 'lodash';
+import {LabelStatus} from '../../../../data/enums/LabelStatus';
 
 interface IProps {
     size: ISize;
@@ -89,6 +89,7 @@ const PointLabelsList: React.FC<IProps> = (
                 key={labelPoint.id}
                 onDelete={deletePointLabelById}
                 value={labelPoint.labelId !== null ? findLast(labelNames, {id: labelPoint.labelId}) : null}
+                labelValue={labelPoint.labelValue}
                 options={labelNames}
                 onSelectLabel={updatePointLabel}
             />
@@ -97,18 +98,18 @@ const PointLabelsList: React.FC<IProps> = (
 
     return (
         <div
-            className="PointLabelsList"
+            className='PointLabelsList'
             style={listStyle}
             onClickCapture={onClickHandler}
         >
             {imageData.labelPoints.filter((labelPoint: LabelPoint) => labelPoint.status === LabelStatus.ACCEPTED).length === 0 ?
                 <EmptyLabelList
-                    labelBefore={"mark your first point"}
-                    labelAfter={"no labels created for this image yet"}
+                    labelBefore={'mark your first point'}
+                    labelAfter={'no labels created for this image yet'}
                 /> :
                 <Scrollbars>
                     <div
-                        className="PointLabelsListContent"
+                        className='PointLabelsListContent'
                         style={listStyleContent}
                     >
                         {getChildren()}

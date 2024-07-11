@@ -1,15 +1,15 @@
-import {LabelName, LabelRect} from "../../../store/labels/types";
-import {LabelUtil} from "../../../utils/LabelUtil";
-import {AnnotationsParsingError, LabelNamesNotUniqueError} from "./YOLOErrors";
-import {ISize} from "../../../interfaces/ISize";
-import {uniq} from "lodash";
+import {LabelName, LabelRect} from '../../../store/labels/types';
+import {LabelUtil} from '../../../utils/LabelUtil';
+import {AnnotationsParsingError, LabelNamesNotUniqueError} from './YOLOErrors';
+import {ISize} from '../../../interfaces/ISize';
+import {uniq} from 'lodash';
 
 export class YOLOUtils {
     public static parseLabelsNamesFromString(content: string): LabelName[] {
         const labelNames: string[] = content
             .split(/[\r\n]/)
             .filter(Boolean)
-            .map((name: string) => name.replace(/\s/g, ""))
+            .map((name: string) => name.replace(/\s/g, ''))
 
         if (uniq(labelNames).length !== labelNames.length) {
             throw new LabelNamesNotUniqueError()
@@ -50,7 +50,7 @@ export class YOLOUtils {
         imageSize: ISize,
         imageName: string
     ): LabelRect {
-        const components = rawAnnotation.split(" ");
+        const components = rawAnnotation.split(' ');
         if (!YOLOUtils.validateYOLOAnnotationComponents(components, labelNames.length)) {
             throw new AnnotationsParsingError(imageName);
         }

@@ -1,5 +1,5 @@
-import {COCOUtils} from "../../../import/coco/COCOUtils";
-import {isEqual} from "lodash";
+import {COCOUtils} from '../../../import/coco/COCOUtils';
+import {isEqual} from 'lodash';
 
 describe('COCOUtils bbox2rect method', () => {
     it('should return valid IRect', () => {
@@ -12,10 +12,10 @@ describe('COCOUtils bbox2rect method', () => {
 
         // then
         const expectedResult = {
-            x: x,
-            y: y,
-            width: width,
-            height: height
+            x,
+            y,
+            width,
+            height
         }
         expect(result).toEqual(expectedResult);
     });

@@ -1,5 +1,5 @@
-import {ISize} from "../interfaces/ISize";
-import {IPoint} from "../interfaces/IPoint";
+import {ISize} from '../interfaces/ISize';
+import {IPoint} from '../interfaces/IPoint';
 
 export class VirtualListUtil {
     public static calculateGridSize(listSize: ISize, childSize: ISize, childCount: number): ISize {
@@ -25,7 +25,7 @@ export class VirtualListUtil {
         const contentWrapperSize: ISize = VirtualListUtil.calculateContentSize(listSize, childSize, gridSize);
         const horizontalMargin = (contentWrapperSize.width - gridSize.width * childSize.width) / (gridSize.width + 1);
 
-        let anchors = [];
+        const anchors = [];
         for (let i = 0; i < childCount; i++) {
             const rowCount: number = Math.floor(i / gridSize.width);
             const columnCount: number = i % gridSize.width;

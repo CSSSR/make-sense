@@ -39,6 +39,10 @@ export const ExportFormatData: ExportFormatDataMap = {
         {
             type: AnnotationFormatType.COCO,
             label: 'Single file in COCO JSON format.'
+        },
+        {
+            type: AnnotationFormatType.ValuedCOCO,
+            label: 'Single file in Valued COCO JSON format.'
         }
     ],
     [LabelType.IMAGE_RECOGNITION]: [

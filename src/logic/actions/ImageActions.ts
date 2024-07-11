@@ -1,23 +1,23 @@
-import { LabelsSelector } from "../../store/selectors/LabelsSelector";
-import { store } from "../../index";
+import { LabelsSelector } from '../../store/selectors/LabelsSelector';
+import { store } from '../../index';
 import {
   updateActiveImageIndex,
   updateActiveLabelId,
   updateActiveLabelNameId,
   updateImageDataById,
-} from "../../store/labels/actionCreators";
-import { ViewPortActions } from "./ViewPortActions";
-import { EditorModel } from "../../staticModels/EditorModel";
-import { LabelType } from "../../data/enums/LabelType";
+} from '../../store/labels/actionCreators';
+import { ViewPortActions } from './ViewPortActions';
+import { EditorModel } from '../../staticModels/EditorModel';
+import { LabelType } from '../../data/enums/LabelType';
 import {
   ImageData,
   LabelLine,
   LabelPoint,
   LabelPolygon,
   LabelRect,
-} from "../../store/labels/types";
-import { LabelStatus } from "../../data/enums/LabelStatus";
-import { remove } from "lodash";
+} from '../../store/labels/types';
+import { LabelStatus } from '../../data/enums/LabelStatus';
+import { remove } from 'lodash';
 
 export class ImageActions {
   public static getPreviousImage(): void {
@@ -66,7 +66,7 @@ export class ImageActions {
   ): ImageData {
     const labelType: LabelType = LabelsSelector.getActiveLabelType();
     const labelNames = LabelsSelector.getLabelNames();
-    let newImageData: ImageData = {
+    const newImageData: ImageData = {
       ...imageData,
     };
     switch (labelType) {

@@ -20,6 +20,7 @@ export class LabelUtil {
         return {
             id: uuidv4(),
             labelId,
+            labelValue: null,
             rect,
             isCreatedByAI: false,
             status: LabelStatus.ACCEPTED,
@@ -27,10 +28,11 @@ export class LabelUtil {
         }
     }
 
-    public static createLabelPolygon(labelId: string, vertices: IPoint[]): LabelPolygon {
+    public static createLabelPolygon(labelId: string, vertices: IPoint[], value: string | null =null): LabelPolygon {
         return {
             id: uuidv4(),
             labelId,
+            labelValue: value,
             vertices
         }
     }

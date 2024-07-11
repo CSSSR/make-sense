@@ -1,20 +1,20 @@
 import React from 'react';
-import {ISize} from "../../../../interfaces/ISize";
+import {ISize} from '../../../../interfaces/ISize';
 import Scrollbars from 'react-custom-scrollbars';
-import {ImageData, LabelName, LabelRect} from "../../../../store/labels/types";
+import {ImageData, LabelName, LabelRect} from '../../../../store/labels/types';
 import './RectLabelsList.scss';
 import {
     updateActiveLabelId,
     updateActiveLabelNameId,
     updateImageDataById
-} from "../../../../store/labels/actionCreators";
-import {AppState} from "../../../../store";
-import {connect} from "react-redux";
-import LabelInputField from "../LabelInputField/LabelInputField";
-import EmptyLabelList from "../EmptyLabelList/EmptyLabelList";
-import {LabelActions} from "../../../../logic/actions/LabelActions";
-import {LabelStatus} from "../../../../data/enums/LabelStatus";
-import {findLast} from "lodash";
+} from '../../../../store/labels/actionCreators';
+import {AppState} from '../../../../store';
+import {connect} from 'react-redux';
+import LabelInputField from '../LabelInputField/LabelInputField';
+import EmptyLabelList from '../EmptyLabelList/EmptyLabelList';
+import {LabelActions} from '../../../../logic/actions/LabelActions';
+import {LabelStatus} from '../../../../data/enums/LabelStatus';
+import {findLast} from 'lodash';
 
 interface IProps {
     size: ISize;
@@ -81,6 +81,7 @@ const RectLabelsList: React.FC<IProps> = ({size, imageData, updateImageDataById,
                 key={labelRect.id}
                 onDelete={deleteRectLabelById}
                 value={labelRect.labelId !== null ? findLast(labelNames, {id: labelRect.labelId}) : null}
+                labelValue={labelRect.labelValue}
                 options={labelNames}
                 onSelectLabel={updateRectLabel}
             />
@@ -89,18 +90,18 @@ const RectLabelsList: React.FC<IProps> = ({size, imageData, updateImageDataById,
 
     return (
         <div
-            className="RectLabelsList"
+            className='RectLabelsList'
             style={listStyle}
             onClickCapture={onClickHandler}
         >
             {imageData.labelRects.filter((labelRect: LabelRect) => labelRect.status === LabelStatus.ACCEPTED).length === 0 ?
                 <EmptyLabelList
-                    labelBefore={"draw your first bounding box"}
-                    labelAfter={"no labels created for this image yet"}
+                    labelBefore={'draw your first bounding box'}
+                    labelAfter={'no labels created for this image yet'}
                 /> :
                 <Scrollbars>
                     <div
-                        className="RectLabelsListContent"
+                        className='RectLabelsListContent'
                         style={listStyleContent}
                     >
                         {getChildren()}

@@ -1,6 +1,7 @@
-import {AnnotationFormatType} from "../../../data/enums/AnnotationFormatType";
-import {VGGExporter} from "./VGGExporter";
-import {COCOExporter} from "./COCOExporter";
+import {AnnotationFormatType} from '../../../data/enums/AnnotationFormatType';
+import {VGGExporter} from './VGGExporter';
+import {COCOExporter} from './COCOExporter';
+import {ValuedCOCOExporter} from "./ValuedCOCOExporter";
 
 export class PolygonLabelsExporter {
     public static export(exportFormatType: AnnotationFormatType): void {
@@ -10,6 +11,9 @@ export class PolygonLabelsExporter {
                 break;
             case AnnotationFormatType.COCO:
                 COCOExporter.export();
+                break;
+            case AnnotationFormatType.ValuedCOCO:
+                ValuedCOCOExporter.export();
                 break;
             default:
                 return;

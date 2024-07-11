@@ -1,19 +1,19 @@
 import React from 'react';
-import {ISize} from "../../../../interfaces/ISize";
+import {ISize} from '../../../../interfaces/ISize';
 import Scrollbars from 'react-custom-scrollbars';
-import {ImageData, LabelName, LabelPolygon} from "../../../../store/labels/types";
+import {ImageData, LabelName, LabelPolygon} from '../../../../store/labels/types';
 import './PolygonLabelsList.scss';
 import {
     updateActiveLabelId,
     updateActiveLabelNameId,
     updateImageDataById
-} from "../../../../store/labels/actionCreators";
-import {AppState} from "../../../../store";
-import {connect} from "react-redux";
-import LabelInputField from "../LabelInputField/LabelInputField";
-import EmptyLabelList from "../EmptyLabelList/EmptyLabelList";
-import {LabelActions} from "../../../../logic/actions/LabelActions";
-import {findLast} from "lodash";
+} from '../../../../store/labels/actionCreators';
+import {AppState} from '../../../../store';
+import {connect} from 'react-redux';
+import LabelInputField from '../LabelInputField/LabelInputField';
+import EmptyLabelList from '../EmptyLabelList/EmptyLabelList';
+import {LabelActions} from '../../../../logic/actions/LabelActions';
+import {findLast} from 'lodash';
 
 interface IProps {
     size: ISize;
@@ -26,7 +26,16 @@ interface IProps {
     updateActiveLabelId: (activeLabelId: string) => any;
 }
 
-const PolygonLabelsList: React.FC<IProps> = ({size, imageData, updateImageDataById, labelNames, updateActiveLabelNameId, activeLabelId, highlightedLabelId, updateActiveLabelId}) => {
+const PolygonLabelsList: React.FC<IProps> = ({
+                                                 size,
+                                                 imageData,
+                                                 updateImageDataById,
+                                                 labelNames,
+                                                 updateActiveLabelNameId,
+                                                 activeLabelId,
+                                                 highlightedLabelId,
+                                                 updateActiveLabelId
+                                             }) => {
     const labelInputFieldHeight = 40;
     const listStyle: React.CSSProperties = {
         width: size.width,
@@ -75,6 +84,7 @@ const PolygonLabelsList: React.FC<IProps> = ({size, imageData, updateImageDataBy
                 key={labelPolygon.id}
                 onDelete={deletePolygonLabelById}
                 value={labelPolygon.labelId !== null ? findLast(labelNames, {id: labelPolygon.labelId}) : null}
+                labelValue={labelPolygon.labelValue}
                 options={labelNames}
                 onSelectLabel={updatePolygonLabel}
             />
@@ -83,18 +93,18 @@ const PolygonLabelsList: React.FC<IProps> = ({size, imageData, updateImageDataBy
 
     return (
         <div
-            className="PolygonLabelsList"
+            className='PolygonLabelsList'
             style={listStyle}
             onClickCapture={onClickHandler}
         >
-            {imageData.labelPolygons.length === 0 ?
-                <EmptyLabelList
-                    labelBefore={"draw your first polygon"}
-                    labelAfter={"no labels created for this image yet"}
-                /> :
-                <Scrollbars>
+            {imageData.labelPolygons.length === 0
+                ? <EmptyLabelList
+                    labelBefore={'draw your first polygon'}
+                    labelAfter={'no labels created for this image yet'}
+                />
+                : <Scrollbars>
                     <div
-                        className="PolygonLabelsListContent"
+                        className='PolygonLabelsListContent'
                         style={listStyleContent}
                     >
                         {getChildren()}
@@ -114,7 +124,7 @@ const mapDispatchToProps = {
 const mapStateToProps = (state: AppState) => ({
     activeLabelId: state.labels.activeLabelId,
     highlightedLabelId: state.labels.highlightedLabelId,
-    labelNames : state.labels.labels
+    labelNames: state.labels.labels
 });
 
 export default connect(

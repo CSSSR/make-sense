@@ -63,6 +63,7 @@ export class AIPoseDetectionActions {
                             id: uuidv4(),
                             labelIndex: null,
                             labelId: null,
+                            labelValue: null,
                             point: {
                                 x: keypoint.position.x,
                                 y: keypoint.position.y

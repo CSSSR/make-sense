@@ -1,9 +1,9 @@
-import {ImageData, LabelName, LabelPolygon} from "../../../store/labels/types";
-import {VGGFileData, VGGObject, VGGPolygon, VGGRegionsData} from "../../../data/labels/VGG";
-import {findLast} from "lodash";
-import {IPoint} from "../../../interfaces/IPoint";
-import {LabelsSelector} from "../../../store/selectors/LabelsSelector";
-import {ExporterUtil} from "../../../utils/ExporterUtil";
+import {ImageData, LabelName, LabelPolygon} from '../../../store/labels/types';
+import {VGGFileData, VGGObject, VGGPolygon, VGGRegionsData} from '../../../data/labels/VGG';
+import {findLast} from 'lodash';
+import {IPoint} from '../../../interfaces/IPoint';
+import {LabelsSelector} from '../../../store/selectors/LabelsSelector';
+import {ExporterUtil} from '../../../utils/ExporterUtil';
 
 export class VGGExporter {
     public static export(): void {
@@ -28,10 +28,10 @@ export class VGGExporter {
         const regionsData: VGGRegionsData = VGGExporter.mapImageDataToVGG(imageData, labelNames);
         if (!regionsData) return null;
         return {
-            fileref: "",
+            fileref: '',
             size: imageData.fileData.size,
             filename: imageData.fileData.name,
-            base64_img_data: "",
+            base64_img_data: '',
             file_attributes: {},
             regions: regionsData
         }
@@ -70,7 +70,7 @@ export class VGGExporter {
         const all_points_x: number[] = path.map((point: IPoint) => point.x).concat(path[0].x);
         const all_points_y: number[] = path.map((point: IPoint) => point.y).concat(path[0].y);
         return {
-            name: "polygon",
+            name: 'polygon',
             all_points_x,
             all_points_y
         }
